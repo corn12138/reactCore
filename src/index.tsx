@@ -3,6 +3,10 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import './tailwind/tailwind.css' //引入tailwindcss
+import 'bootstrap/dist/css/bootstrap.min.css'; //bootstrap
+// import 'antd/dist/antd.css'; // 或者 'antd/dist/antd.less'
+
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
