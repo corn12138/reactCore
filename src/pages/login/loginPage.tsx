@@ -1,7 +1,7 @@
 // src/LoginPage.tsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-// import { loginUser } from '../../api/login'
+import { loginUser } from '../../api/login'
 const LoginPage = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -13,9 +13,9 @@ const LoginPage = () => {
     setError(''); // 清空之前的错误信息
     try {
       // 调用loginUser函数尝试登录
-      // const response = await loginUser(username, password);
+      const response = await loginUser(username, password);
+      console.log(response,'登录后的响应'); // 登录成功，处理响应数据，比如保存token到localStorage
       navigate('/main'); // 登录成功，跳转到主页面
-      // console.log(response); // 登录成功，处理响应数据，比如保存token到localStorage
       // 这里可以进行页面跳转或全局状态更新
       // history.push('/dashboard'); 如果你使用react-router可以这样跳转页面
     } catch (err: object|any) {

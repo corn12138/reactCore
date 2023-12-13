@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 const request = axios.create({
-  baseURL: process.env.REACT_APP_API_BASE_URL, // 使用环境变量或直接指定
+  baseURL: process.env.REACT_APP_API_URL, // 使用环境变量或直接指定
   // 其他全局配置
 });
 
