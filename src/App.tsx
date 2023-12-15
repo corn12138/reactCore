@@ -2,7 +2,8 @@ import React from 'react';
 // import logo from './logo.svg';
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import LoginPage from './pages/login/loginPage';
-import MainPages from './pages/main/MainPages'
+import MainPages from './pages/main/MainPages';
+import HomePage from "./components/aboutMeCompontens";
 import './App.css';
 
 // function App() {
@@ -29,9 +30,10 @@ import './App.css';
 const App: React.FC = () => {
   return (<Router>
     <Routes>
+      <Route path='/homePage' element={<HomePage />} />
       <Route path='/login' element={<LoginPage />} />
       <Route path='main' element={<MainPages />} />
-      <Route path='/' element={<Navigate replace to='/login' />} />
+      <Route path='/' element={<Navigate replace to='/homePage' />} /> {/**这个决定 首屏加载 哪个页面 */}
     </Routes>
   </Router>)
 }

@@ -18,7 +18,13 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "baseUrl": "./", /* Specify the base directory to resolve non-relative module names. */
+    "paths": {
+      "@/*": [
+        "src/*"
+      ] // 这里我们设置了一个通配符 @，映射到 src 目录
+    },
   },
   "include": [
     "src"
