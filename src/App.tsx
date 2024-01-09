@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-d
 import LoginPage from './pages/login/loginPage';
 import MainPages from './pages/main/MainPages';
 import HomePage from "./components/aboutMeCompontens";
+import NotFoundPage from './pages/notFound/NotFoundPage'; // 引入404页面组件
 import './App.css';
 
 // function App() {
@@ -34,6 +35,7 @@ const App: React.FC = () => {
       <Route path='/login' element={<LoginPage />} />
       <Route path='main' element={<MainPages />} />
       <Route path='/' element={<Navigate replace to='/homePage' />} /> {/**这个决定 首屏加载 哪个页面 */}
+      <Route path='*' element={<NotFoundPage />} /> {/* 用于捕获所有未匹配的路径 */}
     </Routes>
   </Router>)
 }

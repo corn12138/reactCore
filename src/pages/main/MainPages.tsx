@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     MenuFoldOutlined,
     MenuUnfoldOutlined,
@@ -16,6 +16,7 @@ import { useNavigate } from 'react-router-dom';
 import type { MenuProps } from 'antd';
 import { Layout, Menu, Button, theme } from 'antd';
 import { logoutUser } from '../../api/logout'
+import { menuItem } from "../../api/menu";
 
 
 const { Header, Sider, Content } = Layout;
@@ -54,12 +55,30 @@ const items: MenuItem[] = [
         getItem('Submenu', 'sub3', null, [getItem('Option 11', '11'), getItem('Option 12', '12')]),
     ]),
 ];
+
+// 获取 侧边栏数据
+const useMenu = () => {
+    const [menuItems, setMenuItems] = useState([]);
+    useEffect(() => {
+        const fetchMenuItems = async () => {
+            try {
+                const res = await menuItem()
+                setMenuItems(res.items)
+                console.log(res,'react 请求')
+            } catch (error) {
+                console.error('Error fetching menu items:', error);
+            }
+        };
+        fetchMenuItems();
+    },[]);
+    return menuItems
+}
 const App: React.FC = () => {
     const navigate = useNavigate()
     const handleOnclick = async () => {
         try {
             const res = await logoutUser();
-            console.log('退出登录的',res)
+            console.log('退出登录的', res)
             navigate('/login')
         } catch (error) {
 
@@ -69,7 +88,8 @@ const App: React.FC = () => {
     const {
         token: { colorBgContainer, borderRadiusLG },
     } = theme.useToken();
-    console.log(items, '侧边栏的数据结构')
+    const itemsMenu = useMenu()
+    console.log(itemsMenu, '侧边栏的数据结构')
     return (
         <Layout style={{ minHeight: '100vh' }}>
             {/* 这是左边的菜单栏 */}
