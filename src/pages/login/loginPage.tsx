@@ -9,11 +9,21 @@ import { RootState, AppDispatch } from '../../store/store';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { login, logout } from '../../features/user/userSlice';
 import { loginUser } from '../../api/login'
-import { message, } from 'antd';
+import { message } from 'antd';
 const LoginPage = () => {
+  const [messageApi] = message.useMessage();
+
+  const success = (msg:string) => {
+    messageApi.open({
+      type: 'success',
+      content: msg,
+    });
+  };
   // const authState = useAuthState();//context
   // const dispatch = useAuthDispatch();//context
   // const user = useSelector((state: RootState) => state.user.value);
+  const browserVersions = navigator.userAgent
+  console.log('哪个版本的浏览器',browserVersions);
   const dispatch = useDispatch<AppDispatch>();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -33,10 +43,11 @@ const LoginPage = () => {
       // 调用loginUser函数尝试登录
       const response = await loginUser(username, password);
       if (response.success) {
-        navigate('/main'); // 登录成功，跳转到主页面
+        success(response.msg); //登录成功后的提示。
+        navigate('/homePage'); // 登录成功，跳转到主页面
         // dispatch({ type: 'LOGIN', payload: response.user }); //context
         dispatch(login(response.user)); //redux存 登录的信息
-        localStorage.setItem("token",response.token)
+        localStorage.setItem("UserToken",response.token)
       } else {
         setError(response.message || '登录失败'); // 设置错误消息
         setShowError(true); // 触发显示错误消息

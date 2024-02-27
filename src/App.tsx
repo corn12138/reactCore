@@ -6,7 +6,7 @@ import MainPages from './pages/main/MainPages';
 import HomePage from "./components/aboutMeCompontens";
 import NotFoundPage from './pages/notFound/NotFoundPage'; // 引入404页面组件
 import './App.css';
-
+import  "antd/dist/reset.css";
 // function App() {
 //   return (
 //     <div className="App">

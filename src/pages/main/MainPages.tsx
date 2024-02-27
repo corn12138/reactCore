@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from "react-redux";
 import {
     MenuFoldOutlined,
     MenuUnfoldOutlined,
@@ -16,6 +17,7 @@ import { useNavigate } from 'react-router-dom';
 import type { MenuProps } from 'antd';
 import { Layout, Menu, Button, theme } from 'antd';
 import { logoutUser } from '../../api/logout'
+import { logout } from "../../features/user/userSlice";
 import { menuItem } from "../../api/menu";
 
 
@@ -64,24 +66,30 @@ const useMenu = () => {
             try {
                 const res = await menuItem()
                 setMenuItems(res.items)
-                console.log(res,'react 请求')
+                console.log(res, 'react 请求')
             } catch (error) {
                 console.error('Error fetching menu items:', error);
             }
         };
         fetchMenuItems();
-    },[]);
+    }, []);
     return menuItems
 }
 const App: React.FC = () => {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
     const handleOnclick = async () => {
         try {
             const res = await logoutUser();
             console.log('退出登录的', res)
-            navigate('/login')
+            // 清除 local storage 或 session storage
+            localStorage.clear();
+            sessionStorage.clear();
+            // redux 重置
+            dispatch(logout());
+            navigate('/login');
         } catch (error) {
-
+            throw error;
         }
     }
     const [collapsed, setCollapsed] = useState(false);
