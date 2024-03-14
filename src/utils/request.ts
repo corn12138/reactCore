@@ -1,26 +1,35 @@
 // src/api/request.ts  AxiosResponse
 import axios, { AxiosRequestConfig } from 'axios';
 import { store } from '../store/store'
-
+import { reportUserData } from '../api/report'; //上报接口
+import Cookies from 'js-cookie';
 // 全局变量
 declare global {
   interface Window {
     trace: (key: string, value: any) => void;
   }
 }
-window.trace = (key: string, value: any) => {
+// 上报
+window.trace = async (key: string, value: any) => {
   const reportData = {
     key,
     value,
-    timestamp: Date.now(),
+    timestamp: new Date(),
     userAgent: navigator.userAgent,
+  };
+
+  try {
+    const res = await reportUserData(reportData);
+    // 可以在这里处理res，如果需要
+    console.log(res, '成功')
+  } catch (error) {
+    console.error('上报错误:', error);
   }
-  axios.post('/api/auth/report', reportData).then(res => {console.log('Reported Successfully',res)}).catch(error => console.error("Reported Failed", error))
 };
 
 // CSRF Token配置
-const CSRF_KEY = 'X-CSRF-Token';
-let csrfToken = '';// 合适的地方 获取 
+const CSRF_KEY = 'XSRF-TOKEN';
+let csrfToken = Cookies.get('XSRF-TOKEN'); // 使用 js-cookie 获取 CSRF 令牌// 合适的地方 获取 
 // 登录超时和断点续传的配置
 let lastRequestQueue: AxiosRequestConfig[] = [];
 let isRetryInProgress = false;
@@ -33,16 +42,12 @@ const request = axios.create({
 });
 const state = store.getState();
 const username = state.user.value?.name; // 假设用户的名称存储在 user slice 的 value 中
-const token = localStorage.getItem('UserToken')
-console.log(token,'request的请求token')
+const token = localStorage.getItem("UserToken")||null;
 // 请求拦截器
 request.interceptors.request.use(
   (config) => {
-    // 上报
-    window.trace('/api/auth/report', config);
-
     // 在这里可以添加认证token等逻辑
-    config.headers['Authorization'] = `${token}`;
+    config.headers['Authorization'] = `Bearer ${token}`;
     config.headers['Content-Type'] = 'application/json;charset=UTF-8';
     if (username) {
       config.headers['X-Username'] = username; // 添加自定义头部，例如 'X-Username'
@@ -55,11 +60,19 @@ request.interceptors.request.use(
     if (!config.headers['Retry']) {
       lastRequestQueue.push(config)
     }
+    const urlBool = config.url?.includes('/report')
+    // 上报
+    if (!urlBool && token) {
+      window.trace('request_end', config);
+    }
+    console.log(config, token, 'logout111111')
     return config;
   },
   (error) => {
     // 上报错误
-    window.trace('request_error', error);
+    if (token && error.config && !error.config.url.includes('/report')) {
+      window.trace('request_error', error);
+    }
     // 处理请求错误
     return Promise.reject(error);
   }
@@ -69,7 +82,8 @@ request.interceptors.request.use(
 request.interceptors.response.use(
   (response) => {
     // 回传数据上报
-    window.trace('response_end', response);
+    // if (!response?.data.reportDataBool)
+    //   window.trace('response_end', response);
     // 从响应头中获取 CSRF 令牌
     const token = response.headers['x-csrf-token'];
     if (token) {
@@ -80,8 +94,9 @@ request.interceptors.response.use(
     return response;
   },
   (error) => {
-    //响应错误上报 
-    window.trace('response_error', error);
+    // if (!error.data?.reportDataBool)
+    //   //响应错误上报 
+    //   window.trace('response_error', error);
     // 登录超时处理
     if (error.response && error.response.status === 401) {
       if (!isRetryInProgress) {

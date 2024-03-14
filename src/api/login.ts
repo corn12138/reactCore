@@ -10,3 +10,12 @@ export const loginUser = async (username: string, password: string) => {
     throw error;
   }
 };
+// 这个是加载登录页的时候 获取 csrf的
+export const loginCsrf = async () => {
+  try {
+    const response = await request.get(`${formatPath}/csrfs`, {});
+    return response
+  } catch (error) {
+    throw error;
+  }
+}

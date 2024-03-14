@@ -1,0 +1,42 @@
+/* 飘来飘去的特效 */
+/* 在你的styles文件夹中的CSS文件里添加 */
+.floating-text {
+    /* 应用动画 */
+    animation: floatAnimation 10s infinite;
+    /* 文字样式 */
+    color: #ff69b4;
+    /* 例如，粉色文字 */
+    font-weight: bold;
+    /* 转换动画使得暂停看起来更平滑 */
+    transition: transform .2s;
+    /* 添加以下样式使得元素全屏显示 */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1000;
+    /* 确保它在最顶层 */
+}
+
+/* 暂停动画时的样式 */
+.paused {
+    animation-play-state: paused;
+}
+
+/* 定义动画关键帧 */
+@keyframes floatAnimation {
+    /* Update your keyframes to ensure the translation is within bounds of the screen */
+    0% { transform: translate(0, 0); }
+    25% { transform: translate(10vw, 10vh); } /* 使用视口宽度(vw)和视口高度(vh) */
+    50% { transform: translate(-10vw, -10vh); }
+    75% { transform: translate(20vw, 20vh); }
+    100% { transform: translate(-20vw, -20vh); }
+  }
+  
+  .floating-container {
+    width: 100vw; /* 100% of the viewport width */
+    height: 100vh; /* 100% of the viewport height */
+    position: relative; /* This makes it a reference for absolute positioned children */
+    overflow: hidden; /* Prevents content from floating outside the container */
+  }

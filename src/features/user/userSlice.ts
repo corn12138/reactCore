@@ -5,6 +5,8 @@ interface UserState {
     value: {
         name: string;
         email: string;
+        last_login: string;
+        id: string;
     } | null;
 }
 interface Users {

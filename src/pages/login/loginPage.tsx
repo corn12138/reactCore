@@ -10,6 +10,8 @@ import { RootState, AppDispatch } from '../../store/store';
 import { login, logout } from '../../features/user/userSlice';
 import { loginUser } from '../../api/login'
 import { message } from 'antd';
+
+
 const LoginPage = () => {
   const [messageApi] = message.useMessage();
 
@@ -22,8 +24,7 @@ const LoginPage = () => {
   // const authState = useAuthState();//context
   // const dispatch = useAuthDispatch();//context
   // const user = useSelector((state: RootState) => state.user.value);
-  const browserVersions = navigator.userAgent
-  console.log('哪个版本的浏览器',browserVersions);
+
   const dispatch = useDispatch<AppDispatch>();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -44,7 +45,7 @@ const LoginPage = () => {
       const response = await loginUser(username, password);
       if (response.success) {
         success(response.msg); //登录成功后的提示。
-        navigate('/homePage'); // 登录成功，跳转到主页面
+        navigate('/main'); // 登录成功，跳转到MainPages页面去
         // dispatch({ type: 'LOGIN', payload: response.user }); //context
         dispatch(login(response.user)); //redux存 登录的信息
         localStorage.setItem("UserToken",response.token)

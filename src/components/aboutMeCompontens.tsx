@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Layout, Menu, Card, Row, Col } from 'antd';
 import { HomeOutlined, UserOutlined, PictureOutlined, BookOutlined } from '@ant-design/icons';
-import type { MenuProps } from 'antd';
+import { MenuProps, Avatar } from 'antd';
 import { useNavigate } from "react-router-dom";
+import { store } from "../store/store";
+import { loginCsrf } from '../api/login'
 // import '../styles/HomePage.css'; // 保留你自己的样式l;
-
 const { Header, Content, Footer } = Layout;
 
 const layoutStyle = {
@@ -35,16 +36,28 @@ const items: MenuProps['items'] = [
 ]
 
 // 做是否登录的校验
+const state = store.getState();
+const username = state.user.value?.name || 'root'
 const isUserLoggedIn = (): boolean => {
-  const token = localStorage.getItem("UserToken");
 
-  return Boolean(token);
+  return Boolean(state.user.value?.name);
 }
 const HomePage: React.FC = () => {
   // 这类 hooks 写里边 
   const [curren] = useState('1');
   const navigate = useNavigate();
-
+  // 调用接口
+  useEffect(() => {
+    const fetchCsrfToken = async () => {
+      try {
+        const res = await loginCsrf();
+        console.log(res, 'csrfToken')
+      } catch (error) {
+        Promise.reject(error)
+      }
+    };
+    fetchCsrfToken();
+  }, []) //[]确保只在组件首次加载的时候调用接口
   // 点击不同的卡片 进入不同的页面
   const handleCardClick = (title: string) => {
     console.log(title, '点击触发')
@@ -65,7 +78,7 @@ const HomePage: React.FC = () => {
 
         break;
       case '最新博客':
-
+      
         break;
 
       default:
@@ -78,9 +91,13 @@ const HomePage: React.FC = () => {
     switch (e.key) {
       case '3':
         // 作品集
-        navigate('/main');
+        navigate('/dashboard');
         break;
-    
+      case '4':
+        // 博客
+        navigate('/blog');
+        break;
+
       default:
         break;
     }
@@ -89,13 +106,21 @@ const HomePage: React.FC = () => {
   return (
     <Layout className="layout" style={layoutStyle}>
       <Header>
-        <div className="logo" />
+        {/* <div className="logo" /> */}
         <Menu theme="dark" mode="horizontal" defaultSelectedKeys={[curren]} items={items} onClick={onClick}>
           {/* <Menu.Item key="1" icon={<HomeOutlined />}>主页</Menu.Item>
           <Menu.Item key="2" icon={<UserOutlined />}>关于我</Menu.Item>
           <Menu.Item key="3" icon={<PictureOutlined />}>作品集</Menu.Item>
           <Menu.Item key="4" icon={<BookOutlined />}>博客</Menu.Item> */}
+          {/* 头像 */}
+
         </Menu>
+        <div className="flex items-center justify-end space-x-2 mr-4">
+          <Avatar className="w-8 h-8 bg-green-600" icon={<UserOutlined />} />
+          <span className="text-black text-opacity-55 font-semibold">欢迎您: {username}</span>
+        </div>
+
+
       </Header>
 
       <Content style={contentStyle}>
