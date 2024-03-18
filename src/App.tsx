@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-d
 import LoginPage from './pages/login/loginPage';
 import MainPages from './pages/main/MainPages';
 import HomePage from "./components/aboutMeCompontens";
+import ToComponents from "./components/tocomponents";
 import Blog from "./pages/blog/blogPage";
 import NotFoundPage from './pages/notFound/NotFoundPage'; // 引入404页面组件
 import Dashboard from './pages/websocket//Dashboard'
@@ -40,6 +41,7 @@ const App: React.FC = () => {
       <Route path='*' element={<NotFoundPage />} /> {/* 用于捕获所有未匹配的路径 */}
       <Route path='/blog' element={<Blog />} />
       <Route path='/dashboard' element={<Dashboard />} /> {/*这是 k线图或者其他图的页面 */}
+      <Route path='/ToComponents' element={<ToComponents />} /> {/*这是todolist*/}
     </Routes>
   </Router>)
 }

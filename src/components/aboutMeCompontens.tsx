@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Layout, Menu, Card, Row, Col } from 'antd';
-import { HomeOutlined, UserOutlined, PictureOutlined, BookOutlined } from '@ant-design/icons';
+import { HomeOutlined, UserOutlined, PictureOutlined, BookOutlined,FileSyncOutlined } from '@ant-design/icons';
 import { MenuProps, Avatar } from 'antd';
 import { useNavigate } from "react-router-dom";
 import { store } from "../store/store";
@@ -33,6 +33,7 @@ const items: MenuProps['items'] = [
   { label: '关于我', key: '2', icon: <UserOutlined /> },
   { label: '作品集', key: '3', icon: <PictureOutlined /> },
   { label: '博客', key: '4', icon: <BookOutlined /> },
+  { label: 'toDoList', key: '5', icon: <FileSyncOutlined /> },
 ]
 
 // 做是否登录的校验
@@ -96,6 +97,10 @@ const HomePage: React.FC = () => {
       case '4':
         // 博客
         navigate('/blog');
+        break;
+      case '5':
+        // todolist
+        navigate('/ToComponents');
         break;
 
       default:
