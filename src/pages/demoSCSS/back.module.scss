@@ -1,0 +1,365 @@
+// uniqueClassName---将css定于局部，不要扩散到全局
+.uniqueClassName {
+.goback{
+  width: 78px;
+  border: 1px solid #000;
+  border-radius: 5px;
+  margin-left: 5px;
+  margin-top: 5px;
+  text-align: center;
+  background: linear-gradient(90deg,  #ffc700 0%, #e91e1e 33%, #6f27b0 66%, #00ff88 100%);
+  background-position: 100% 0;
+  animation: bgSize 5s infinite ease-in-out alternate;
+}
+  @keyframes bgSize {
+    0% {
+      background-size: 300% 100%;
+    }
+    100% {
+      background-size: 100% 100%;
+    }
+  }
+  .l-container {
+    display: flex;
+    flex-direction: row; // 子元素垂直排列
+    flex-wrap: wrap;
+    align-items: center; // 子元素在水平方向上居中
+    justify-content: center; // 子元素在垂直方向上居中
+    height: auto; // 视口高度，确保l-container占满整个屏幕
+    overflow-y: auto;
+  }
+
+  // 是写个 渐变
+  .g-container {
+    position: relative;
+    width: 300px;
+    margin: 10px 10px; // 保持左右间距相等
+    // border: 1px solid #999;
+    padding: 5px;
+
+    &::before {
+      content: "";
+      position: absolute;
+      right: -5px;
+      bottom: 0;
+      top: 0;
+      width: 100px;
+      background: linear-gradient(90deg, transparent, #fff);
+      pointer-events: none;
+    }
+  }
+
+  ul {
+    width: 300px;
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: scroll;
+
+    li {
+      margin-right: 12px;
+      border-radius: 5px;
+      border: 1px solid #666;
+      padding: 4px;
+      cursor: pointer;
+
+      &:hover {
+        background: #666;
+        color: #fff;
+      }
+    }
+  }
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
+  // 颜色的线性渐变
+  .c-colors {
+    width: 300px;
+    height: 200px;
+    border: 2px solid #000;
+    background: linear-gradient(#fff 0%, #fff 50%, #f00 50%, #f00 100%);
+    // 移除这些属性，改用 transform 来垂直居中
+    // position: absolute;
+    // right: 0;
+    // bottom: 0;
+    // top: 0;
+
+    // 使用 margin 0 auto 来水平居中
+    margin: 10px 10px;
+    // 使用 transform 来垂直居中
+    // transform: translateY(-50%);
+  }
+
+  // 三角形的线性渐变
+  .triangle {
+    width: 300px;
+    height: 300px;
+    border: 2px solid #000;
+    background: linear-gradient(45deg, #f00 0%, #f00 50%, transparent 50%, transparent 100%);
+    margin: 10px;
+  }
+
+  // 渐变叠加(四个background 依次对应)
+  .overlay {
+    width: 200px;
+    height: 120px;
+    margin: 10px;
+    background: linear-gradient(135deg, transparent 15px, deeppink 0),
+    linear-gradient(-135deg, transparent 15px, deeppink 0),
+    linear-gradient(45deg, transparent 15px, deeppink 0),
+    linear-gradient(-45deg, transparent 15px, deeppink 0);
+    background-size: 50% 50%, 50% 50%, 50% 50%, 50% 50%;
+    background-position: top left, top right, bottom left, bottom right;
+    background-repeat: no-repeat;
+  }
+
+  // 直接使用 repeating 重复渐变 来节省代码(相当于 每隔11px 来段颜色f06a0e，每隔9px 来段transparent透明)
+  .repeat {
+    width: 200px;
+    height: 100px;
+    background: repeating-linear-gradient(45deg, #f06a0e, #f06a0e 11px, transparent 11px, transparent 20px);
+    margin: 10px;
+  }
+
+  // 径向渐变（47%的这个衔接处 考虑把他 稍微大一点 即是#ffeb3b 47.9% 目的就是为了消除毛刺 具体多少 具体调试一直到没有锯齿）
+  .radical {
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(#9c27b0 0%, #9c27b0 47%, #ffeb3b 47.9%, #ffeb3b 100%);
+  }
+
+  // 使用多层径向渐变叠加 来实现波浪边框(filter 属性将模糊或颜色偏移等图形效果应用于元素。滤镜通常用于调整图像、背景和边框的渲染。drop-shadow(x,y,阴影半径,颜色))
+  .radicalWave {
+    position: relative;
+    width: 400px;
+    height: 160px;
+    line-height: 160px;
+    margin: 20px;
+    background: linear-gradient(90deg, #945700 0%, #f49714 100%);
+    filter: drop-shadow(-7px 4px 3px #333);
+    font-size: 100px;
+    color: #fff;
+    font-weight: bold;
+    padding-left: 60px;
+    box-sizing: border-box;
+    cursor: pointer;
+    border-radius: 5px;
+    text-shadow: -2px -2px 2px #333;
+
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      // left: 0;
+      right: 0;
+      bottom: 0;
+    }
+
+    &::before {
+      width: 10px;
+      background-image: radial-gradient(circle at -5px 10px, transparent 12px, #fff 13px, #fff 0px);
+      background-size: 20px 20px; //图片宽高
+      background-position: 0 15px;
+    }
+
+    &::after {
+      width: 15px;
+      background-image: radial-gradient(circle at 15px 10px, #fff 12px, transparent 13px, transparent 0px);
+      background-size: 20px 40px;
+      background-position: 0px 15px;
+    }
+  }
+
+  .keyframes {
+    p {
+      position: absolute;
+      top: 20%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(3); //translate (x,y,z)平移  scale 元素大小缩放 scale3D -三维大小缩放
+      font-size: 18px;
+      text-decoration: none;
+      padding: 10px;
+      cursor: pointer;
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(circle at 10px -7px, transparent 8px, blue 8px, blue 9px, transparent 9px) repeat-x;
+        background-size: 20px 20px;
+        background-position: -10px calc(100% + 16px);
+      }
+
+      &:hover::before {
+        animation: moveTop 2s infinite alternate linear;
+      }
+
+      &::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(circle at 10px 27px, transparent 8px, green 8px, green 9px, transparent 9px) repeat-x;
+        background-size: 20px 20px;
+        background-position: 0 calc(100% - 4px);
+
+        &:hover::after {
+          animation: moveBottom 2s infinite alternate linear;
+        }
+      }
+    }
+
+    a {
+      position: absolute;
+      top: 70%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(3);
+      font-size: 18px;
+      text-decoration: none;
+      background: radial-gradient(circle at 10px -7px, transparent 8px, currentColor 8px, currentColor 9px, transparent 9px) repeat-x,
+      radial-gradient(circle at 10px 27px, transparent 8px, currentColor 8px, currentColor 9px, transparent 9px) repeat-x;
+      background-size: 20px 20px;
+      background-position: -10px calc(100% + 16px), 0 calc(100% - 4px);
+
+      .a {
+        padding: 5px 0;
+      }
+
+      a:hover,
+      a:focus {
+        background: radial-gradient(circle at 10px -7px, transparent 8px, currentColor 8px, currentColor 9px, transparent 9px) repeat-x,
+        radial-gradient(circle at 10px 27px, transparent 8px, currentColor 8px, currentColor 9px, transparent 9px) repeat-x;
+        background-size: 20px 20px;
+        background-position: -10px calc(100% + 16px), 0 calc(100% - 4px);
+        animation: waveFlow 1s infinite linear;
+      }
+
+    }
+  }
+
+  @keyframes waveFlow {
+    from {
+      background-position-x: -10px 0;
+    }
+
+    to {
+      background-position-x: -30px -20px;
+    }
+  }
+
+  @keyframes moveTop {
+    100% {
+      bottom: -5px;
+    }
+  }
+
+  @keyframes moveBottom {
+    100% {
+      bottom: 5px;
+    }
+  }
+
+  .conicS {
+    width: 200px;
+    height: 200px;
+    border: 1px solid #000;
+    // background: conic-gradient(deeppink, yellowgreen);
+    background: conic-gradient(from 270deg at 50px 50px, deeppink, yellowgreen);
+  }
+
+  //scss的variable的写法
+  $colors: ();
+  $totalStops: 20;
+
+  @for $i from 0 through $totalStops {
+    $colors: append($colors, hsl($i * (360deg / $totalStops), 100%, 50%), comma);
+  };
+
+  .colors {
+    width: 200px;
+    height: 200px;
+    background: conic-gradient($colors);
+    border-radius: 50%;
+  }
+
+  // 使用角向渐变实现pie
+  .pieChart {
+    width: 200px;
+    height: 200px;
+    background: conic-gradient(deeppink 0 30%, yellowgreen 0% 70%, teal 0% 100%);
+    border-radius: 50%;
+  }
+
+  // 角向渐变结合background-size 实现关于这个 贴图
+  .basis {
+    width: 200px;
+    height: 200px;
+    background: conic-gradient(#000 0 12.5%, #fff 0 37.5%, #000 0 62.5%, #fff 0 87.5%, #000 0 100%);
+    border: 6px solid #999;
+  }
+
+  .wallpaper {
+    width: 200px;
+    height: 200px;
+    border: 6px solid #999;
+    background: conic-gradient(#000 0 12.5%, #fff 0 37.5%, #000 0 62.5%, #fff 0 87.5%, #000 0 100%);
+    background-size: 25px 25px;
+  }
+
+  .wallpaper2 {
+    width: 250px;
+    height: 250px;
+    background: conic-gradient(#000 0 12.5%, #fff 0 37.5%, #000 0 62.5%, #fff 0 87.5%, #000 0 100%);
+    background-size: 50px 50px;
+    border: 5px solid #f00;
+    border-radius: 50%;
+  }
+
+  // 重复的角向渐变
+  .repeatConic {
+    width: 200px;
+    height: 200px;
+    border: 1px solid #f06a0e;
+    background: repeating-conic-gradient(deeppink 0 30deg, yellowgreen 0 45deg);
+    border-radius: 50%;
+  }
+
+  .repeat-position {
+    width: 200px;
+    height: 200px;
+    // border: 1px solid #f49714;
+    // background: conic-gradient(from 270deg at 50px 50px, deeppink 0 90deg, transparent 0 360deg);
+    background: conic-gradient(from 270deg at 50px 50px, #fff 0 90deg, #000 0 360deg);
+    background-position: -25px -25px;
+    // background-repeat: no-repeat;
+  }
+
+  .repeating-conic{
+    margin-left: 10px;
+    width: 300px;
+    height: 300px;
+    background: repeating-conic-gradient(#fff,#000,#fff .1deg);
+  }
+  .repeating-radial{
+    margin-left: 10px;
+    width: 300px;
+    height: 300px;
+    background-image: repeating-radial-gradient(  ellipse at center center,
+            rgb(75, 154, 242),
+            rgb(64, 135, 228),
+            rgb(54, 117, 214),
+            rgb(43, 98, 200),
+            rgb(33, 79, 185),
+            rgb(22, 60, 171),
+            rgb(12, 42, 157),
+            rgb(1, 23, 143) .01px
+    );
+  }
+}

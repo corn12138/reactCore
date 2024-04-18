@@ -57,6 +57,7 @@
   },
   "devDependencies": {
     "@types/js-cookie": "^3.0.6",
-    "@types/shortid": "^0.0.32"
+    "@types/shortid": "^0.0.32",
+    "sass": "^1.72.0"
   }
 }

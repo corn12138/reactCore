@@ -5,7 +5,7 @@ import {
     MenuUnfoldOutlined,
     // UploadOutlined,
     // UserOutlined,
-    // VideoCameraOutlined,
+    VideoCameraOutlined,
     AppstoreOutlined,
     ContainerOutlined,
     DesktopOutlined,
@@ -43,6 +43,12 @@ const items: MenuItem[] = [
     getItem('我的首页', '1', <PieChartOutlined />),
     getItem('返回主页', '2', <DesktopOutlined />),
     getItem('图表页', '3', <ContainerOutlined />),
+    getItem('scss样式页', '4', <VideoCameraOutlined />,[
+        getItem('background基础', '13'),
+        getItem('background进阶', '14'),
+        getItem('mask巧用遮罩', '15'),
+        getItem('Option 8', '16'),
+    ]),
 
     getItem('Navigation One', 'sub1', <MailOutlined />, [
         getItem('Option 5', '5'),
@@ -62,7 +68,7 @@ const hashList: { [key: string]: string } = {
 "1":'/homePage',
 "2":'/homePage',
 "3":'/dashboard',
-"4":'/',
+// "4":'/demoScss',
 "5":'/',
 "6":'/',
 "7":'/',
@@ -71,6 +77,10 @@ const hashList: { [key: string]: string } = {
 "10":'/',
 "11":'/',
 "12":'/',
+    "13":'/demoScss',
+    "14":'/advancedScss',
+    "15":'/',
+    "16":'/'
 };
 
 // 获取 侧边栏数据

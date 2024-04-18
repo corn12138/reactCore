@@ -17,7 +17,7 @@ body {
     margin: 0;
 }
 
-#root,
+/* #root, */
 .todo-list-app {
     display: flex;
     flex-flow: column nowrap;

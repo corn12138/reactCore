@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ChartComponent from '../../components/chartComponent';
 import { useWebSocket } from '../../hooks/useWebSocket';
-import FloatingText from "../../components/specialEffect";
+// import FloatingText from "../../components/specialEffect";
 // import { getChartData } from "../../api/getChartData";
 
 interface dataObj {

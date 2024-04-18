@@ -76,7 +76,7 @@ const HomePage: React.FC = () => {
 
         break;
       case '作品集预览':
-
+        navigate('/main');
         break;
       case '最新博客':
       

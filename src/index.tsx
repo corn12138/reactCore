@@ -8,6 +8,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import './tailwind/tailwind.css' //引入tailwindcss
 import 'bootstrap/dist/css/bootstrap.min.css'; //bootstrap
+// import  "./styles/main.scss"; //引入一些个全局的样式(scss)
 // import 'antd/dist/antd.css'; // 或者 'antd/dist/antd.less'
 
 
