@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import { Layout, Menu, Card, Row, Col } from 'antd';
 import { HomeOutlined, UserOutlined, PictureOutlined, BookOutlined,FileSyncOutlined } from '@ant-design/icons';
@@ -33,7 +34,7 @@ const items: MenuProps['items'] = [
   { label: '关于我', key: '2', icon: <UserOutlined /> },
   { label: '作品集', key: '3', icon: <PictureOutlined /> },
   { label: '博客', key: '4', icon: <BookOutlined /> },
-  { label: 'toDoList', key: '5', icon: <FileSyncOutlined /> },
+  // { label: 'toDoList', key: '5', icon: <FileSyncOutlined /> },
 ]
 
 // 做是否登录的校验
@@ -100,7 +101,7 @@ const HomePage: React.FC = () => {
         break;
       case '5':
         // todolist
-        navigate('/ToComponents');
+        // navigate('/ToComponents');
         break;
 
       default:

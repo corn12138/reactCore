@@ -13,7 +13,7 @@ import {
     PieChartOutlined,
     LogoutOutlined
 } from '@ant-design/icons';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,Outlet } from 'react-router-dom';  //Outlet 是一个 占位符 和vue 的 <router-view /> 一样的
 import type { MenuProps } from 'antd';
 import { Layout, Menu, Button, theme } from 'antd';
 import { logoutUser } from '../../api/logout'
@@ -43,16 +43,16 @@ const items: MenuItem[] = [
     getItem('我的首页', '1', <PieChartOutlined />),
     getItem('返回主页', '2', <DesktopOutlined />),
     getItem('图表页', '3', <ContainerOutlined />),
-    getItem('scss样式页', '4', <VideoCameraOutlined />,[
+    getItem('scss样式页', '4', <VideoCameraOutlined />, [
         getItem('background基础', '13'),
         getItem('background进阶', '14'),
         getItem('mask巧用遮罩', '15'),
-        getItem('Option 8', '16'),
+        getItem('toDoList', '16'),
     ]),
 
-    getItem('Navigation One', 'sub1', <MailOutlined />, [
-        getItem('Option 5', '5'),
-        getItem('Option 6', '6'),
+    getItem('CKeditor', 'sub1', <MailOutlined />, [
+        getItem('Ckeditor easy', '5'),
+        getItem('气球式ckeditor 编辑器', '6'),
         getItem('Option 7', '7'),
         getItem('Option 8', '8'),
     ]),
@@ -63,24 +63,24 @@ const items: MenuItem[] = [
         getItem('Submenu', 'sub3', null, [getItem('Option 11', '11'), getItem('Option 12', '12')]),
     ]),
 ];
-// 点击跳转的映射
+// 点击跳转的映射 (没有 / 的 就是相对路径 是此页面的子路由)
 const hashList: { [key: string]: string } = {
-"1":'/homePage',
-"2":'/homePage',
-"3":'/dashboard',
-// "4":'/demoScss',
-"5":'/',
-"6":'/',
-"7":'/',
-"8":'/',
-"9":'/',
-"10":'/',
-"11":'/',
-"12":'/',
-    "13":'/demoScss',
-    "14":'/advancedScss',
-    "15":'/',
-    "16":'/'
+    "1": '/homePage',
+    "2": '/homePage',
+    "3": 'dashboard', //echarts 图表页 是main的子路由 所以使用相对路径
+    // "4":'/demoScss',
+    "5": 'ckeditorEasy',
+    "6": 'ckeditorBalloon',
+    "7": '/',
+    "8": '/',
+    "9": '/',
+    "10": '/',
+    "11": '/',
+    "12": '/',
+    "13": 'demoScss',
+    "14": 'advancedScss',
+    "15": '/',
+    "16": 'ToComponents'
 };
 
 // 获取 侧边栏数据
@@ -100,7 +100,7 @@ const useMenu = () => {
     }, []);
     return menuItems
 }
-const App: React.FC = () => {
+const MainPages: React.FC = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     // 退出登录
@@ -132,14 +132,14 @@ const App: React.FC = () => {
     // 
     const menuClick: MenuProps['onClick'] = (e) => {
         console.log(e, '菜单的点击事件')
-       
+
     }
-    const menuonSelect = (e:any) => {
+    const menuonSelect = (e: any) => {
         // console.log(e, 'menuonSelect')
-        let targetPage='/';
+        let targetPage = '/';
         targetPage = hashList[e.key as string]
         navigate(targetPage);
-        console.log(targetPage,'sssssssssss')
+        console.log(targetPage, 'sssssssssss')
     }
     return (
         <Layout style={{ minHeight: '100vh' }}>
@@ -184,12 +184,12 @@ const App: React.FC = () => {
                         borderRadius: borderRadiusLG,
                     }}
                 >
-                    Content
+                    <Outlet /> {/* 这里会渲染匹配的子路由组件 */}
                 </Content>
             </Layout>
         </Layout>
     );
 };
 
-export default App;
+export default MainPages;
 

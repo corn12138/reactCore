@@ -10,8 +10,11 @@ import NotFoundPage from './pages/notFound/NotFoundPage'; // 引入404页面组�
 import Dashboard from './pages/websocket//Dashboard'
 import DemoScss from './pages/demoSCSS/backroung';
 import AdvancedScss from './pages/demoSCSS/bgcjj/backgroundAdvanced'
+// ckeditor 的 模块
+import CkEditor from "./pages/ckeditor/ckeditor";
+import CkeditorBalloon from "./pages/ckeditor/ckeditorBalloon";
 import './App.css';
-import  "antd/dist/reset.css";
+import "antd/dist/reset.css";
 // function App() {
 //   return (
 //     <div className="App">
@@ -34,20 +37,29 @@ import  "antd/dist/reset.css";
 //   );
 // }
 const App: React.FC = () => {
-  return (<Router>
-    <Routes>
-      <Route path='/homePage' element={<HomePage />} />
-      <Route path='/login' element={<LoginPage />} />
-      <Route path='/main' element={<MainPages />} />
-      <Route path='/' element={<Navigate replace to='/homePage' />} /> {/**这个决定 首屏加载 哪个页面 */}
-      <Route path='*' element={<NotFoundPage />} /> {/* 用于捕获所有未匹配的路径 */}
-      <Route path='/blog' element={<Blog />} />
-      <Route path='/dashboard' element={<Dashboard />} /> {/*这是 k线图或者其他图的页面 */}
-      <Route path='/ToComponents' element={<ToComponents />} /> {/*这是todolist*/}
-      <Route path='/demoScss' element={<DemoScss />} /> {/*学习 css的 */}
-      <Route path='/advancedScss' element={<AdvancedScss />} /> {/*学习 css的 */}
-    </Routes>
-  </Router>)
+  return (
+    <Router>
+      <Routes>
+        <Route path='/' element={<Navigate replace to='/homePage' />} /> {/* 首屏加载对应的 */}
+        <Route path='/homePage' element={<HomePage />} />
+        <Route path='/login' element={<LoginPage />} />
+        <Route path='/blog' element={<Blog />} />
+        {/* main 是 LayOut 下的 子路由 */}
+        <Route path='/main' element={<MainPages />}>
+          <Route path='dashboard' element={<Dashboard />} /> {/* 在main下的子路由不要使用 '/xx'，要使用这样的相对路径  */}
+          <Route path='ToComponents' element={<ToComponents />} /> {/* todolist */}
+          <Route path='demoScss' element={<DemoScss />} />
+          <Route path='advancedScss' element={<AdvancedScss />} />
+          {/* ckeditor */}
+          <Route path='ckeditorEasy' element={<CkEditor />} />
+          {/* ckeditor的气球式编辑器 */}
+          <Route path='ckeditorBalloon' element={<CkeditorBalloon />} />
+        </Route>
+        {/* 这是 notfound 页*/}
+        <Route path='*' element={<NotFoundPage />} />
+      </Routes>
+    </Router>
+  );
 }
 
 export default App;
