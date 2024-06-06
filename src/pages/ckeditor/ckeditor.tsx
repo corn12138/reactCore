@@ -4,10 +4,10 @@ import { CKEditor, CKEditorContext } from '@ckeditor/ckeditor5-react';
 import ClassicEditors from '@ckeditor/ckeditor5-build-classic';
 
 
-
 import { EventInfo } from '@ckeditor/ckeditor5-utils';
-
+// 插件的引入
 import '@ckeditor/ckeditor5-build-classic/build/translations/zh-cn'; //引入特定的语言
+// import { Autoformat } from "@ckeditor/ckeditor5-autoformat";
 
 const onChangeHandle = (e: EventInfo<string, unknown>, editor: ClassicEditors) => {
     // console.log(editor.getData(), 'onChangeHandle')
@@ -40,7 +40,9 @@ const CkEditor: React.FC = () => {
 
                         },
                         // 语言
-                        language:'zh-cn'
+                        language:'zh-cn',
+                        // 插件 集成
+                        // plugins:[Autoformat]
                     }
                 }
                 onReady={editor => {

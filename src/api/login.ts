@@ -11,9 +11,15 @@ export const loginUser = async (username: string, password: string) => {
   }
 };
 // 这个是加载登录页的时候 获取 csrf的
-export const loginCsrf = async () => {
+export const loginCsrf = async (data: undefined) => {
   try {
-    const response = await request.get(`${formatPath}/csrfs`, {});
+    // const response = await request.get(`${formatPath}/csrfs`, {});
+    const response = await request({
+      method: 'get',
+      url: `${formatPath}/csrfs`,
+      params: data,
+      // responseType:"json"
+    })
     return response
   } catch (error) {
     throw error;
